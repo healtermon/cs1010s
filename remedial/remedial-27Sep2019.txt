@@ -1,0 +1,21 @@
+1. Code Tracing
+- Basic python syntax and language
+- Do not anyhow whack
+
+2. Recursion, Iteration, Orders of Growth
+- Recursion:
+=> 1st step: Base case
+=> Recursive step
+- Iteration:
+=> result variable
+=> for/while loop
+=> return result
+
+3. Higher-Order Function
+=> Matching problem
+=> Surprise
+
+4. Data Abstraction
+=> Decide on a representation to track all the moving parts
+==> Has to be tuple
+=> Keep in mind that tuples are immutable

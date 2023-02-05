@@ -1,0 +1,179 @@
+* Question 1: Function Definitions
+Below is a sequence of expressions. What is the result printed by IDLE given the print statements? 
+Insert your answers into the right-hand side of the assignment (=) statements following each print.
+
+Assume that the expressions are to be evaluated in the order in which it is presented.
+
+You should determine the answers to this exercise without the help of a computer, and only later check your answers.
+
+Observe that some of the examples shown are indented and displayed over several lines. The indentation level of statements is significant in Python. As Python functions don't have explicit begin or end, and no curly braces to mark where the function code starts and stops. The only delimiter is a colon : and the indentation of the code itself.
+#+begin_src python
+def square(x):
+    return x ** 2
+
+# print(square(2))
+print_square_2 = 4 # An example answer
+
+# print(square(4)) 
+print_square_4 = "# Insert your answer here" # Insert your answer here
+
+
+# print(square(square(square(2))))
+print_square_square_square_2 ="# Insert your answer here"  # Insert your answer here
+
+
+def f(x):
+    return x * x
+
+# print(f(4))
+print_f_4 = "# Insert your answer here" # Insert your answer here
+
+
+def try_f(f):
+    return f(3)
+
+# print(try_f(f))
+print_try_f_f =  "# Insert your answer here" # Insert your answer here
+
+# print(try_f(f) == try_f(square))
+print_try_try = "# Insert your answer here" # Insert your answer here
+
+# print(f(3) == square(3))
+print_f_3_equals_square_3 = "# Insert your answer here" # Insert your answer here
+
+# print(f == square)
+print_f_equals_square = "# Insert your answer here" # Insert your answer here
+
+#+end_src
+
+#+begin_src python
+def square(x):
+    return x ** 2
+
+# print(square(2))
+print_square_2 = 4 # An example answer
+
+# print(square(4)) 
+print_square_4 = 16 # input your answer here
+
+
+# print(square(square(square(2))))
+print_square_square_square_2 = square(square(square(2))) # or 256
+
+
+def f(x):                       # same goddamn function but more efficient
+    return x * x
+
+# print(f(4))
+print_f_4 = 16 # input your answer here
+
+
+def try_f(f):
+    return f(3)
+
+# print(try_f(f))
+print_try_f_f =  9 # input your answer here
+
+# print(try_f(f) == try_f(square))
+print_try_try = True # input your answer here
+
+# print(f(3) == square(3))
+print_f_3_equals_square_3 = True # input your answer here
+
+# print(f == square)
+print_f_equals_square = False # input your answer here
+
+#+end_src python
+
+* Question 2: Odd function
+Using if-else, define a function odd(x) that takes in an integer as input and returns True when it is an odd number and False otherwise. 
+
+Hint: Consider using the '%' operator.
+
+#+begin_src python
+  def odd(x):
+      # write your function here
+      pass
+#+end_src
+
+#+name:ans
+#+begin_src python
+    def odd(x):
+        if x%2: return True
+        else:   return False
+#+end_src
+* Question 3: New Odd Function
+Define a function new_odd(x) without using if-else statements that returns True when its integer argument is an odd number and False otherwise.
+
+#+begin_src python
+  def new_odd(x):
+      # write your function here
+      pass
+#+end_src
+
+#+name:ans
+#+begin_src python
+  def new_odd(x):
+     return x%2
+#+end_src
+* Question 4: Digit Counting
+Define a function that will return the number of digits in an integer. You can safely assume that the integers are non-negative and will not begin with the number 0 other than the integer 0 itself.
+
+#+begin_src python
+  def number_of_digits(x):
+      # write your function here
+      pass
+#+end_src
+
+#+name:ans
+#+begin_src python
+  def number_of_digits(x):
+     if x<10: return 1
+     else: return 1 + number_of_digits(x//10)
+#+end_src
+
+* Question 5: Bigger Sum
+Define a function that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
+
+For example, given the numbers 1, 2 and 3, since 2 and 3 are larger than 1, the bigger_sum function should return the integer value 13.
+
+Note: You do not need to write the function is_approximately_equal. It is pre-included on Coursemology.
+#+begin_src python
+  def bigger_sum(a, b, c):
+      # write your function here
+      pass
+#+end_src
+
+#+name:ans
+#+begin_src python
+  def bigger_sum(a, b, c):
+      def sum_of_squares(x,y):
+          return x*x + y*y
+      biggest2 = sorted([a,b,c])[-2:]
+      return sum_of_squares(*biggest2)
+#+end_src
+* Question 6: Leap Years
+Write a function is_leap_year that takes one integer parameter and decides whether it corresponds to a leap year, i.e. is_leap_year returns True if the input parameter is a leap year, and False otherwise.
+
+So which years are leap years? Well, according to Wikipedia:
+
+In the Gregorian calendar, the current standard calendar in most of the world, most years that are integer multiples of 4 are leap years. In each leap year, the month of February has 29 days instead of 28. Adding an extra day to the calendar every four years compensates for the fact that a period of 365 days is shorter than a solar year by almost 6 hours. This calendar was first used in 1582. 
+
+Some exceptions to this rule are required since the duration of a solar year is slightly less than 365.25 days. Over a period of four centuries, the accumulated error of adding a leap day every four years amounts to about three extra days. The Gregorian Calendar therefore omits 3 leap days every 400 years, omitting February 29 in the 3 century years (integer multiples of 100) that are not also integer multiples of 400. For example, 1600 was a leap year, but 1700, 1800 and 1900 were not. Similarly, 2000 was a leap year, but 2100, 2200, and 2300 will not be. By this rule, the average number of days per year is 365 + 1/4 − 1/100 + 1/400 = 365.2425.
+#+begin_src python
+  def is_leap_year(year):
+      # write your function here
+      pass
+#+end_src
+
+#+name:ans
+#+begin_src python
+  def is_leap_year(year:int) -> bool:
+      def is_multiple_of_4(x): return not x%4
+      def is_century(x):       return not x%100
+      def is_quadcentury(x):   return not x%400
+    
+      if (is_quadcentury(year)) :return True
+      else: return not is_century(year) and is_multiple_of_4(year)
+#+end_src
+

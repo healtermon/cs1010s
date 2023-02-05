@@ -1,0 +1,284 @@
+* Question 1: Magnitude
+Define a function magnitude that takes in the coordinates of two points on a plane, (x1, y1) and (x2, y2), as arguments and returns the magnitude of the vector between them.
+#+begin_src python
+  # Import math package
+  from math import *
+
+  def magnitude(x1, y1, x2, y2):
+      # Returns the magnitude of the vector
+      # between (x1, y1) and (x2, y2).
+      return
+
+#+end_src
+
+#+name:ans
+#+begin_src python
+  # Import math package
+  from math import sqrt
+
+  def magnitude(x1, y1, x2, y2):
+      # Returns the magnitude of the vector
+      # between (x1, y1) and (x2, y2).
+      return sqrt((x1-x2)**2 + (y1-y2)**2)
+#+end_src
+
+* Question 2: Area 1
+A function can be viewed as a black box. All you need to know are the arguments it takes as input and what its output is.
+
+One way of calculating the area of a triangle is using the formula area = 1/2 * base * height. 
+
+Define a function area that calculates and returns the area of any given triangle using this formula. 
+
+Decide what arguments it requires as input and what its return value should be.
+#+begin_src python
+  # Replace your_params with the appropriate parameters
+  def area(your_params):
+      # Returns area of the triangle using the formula area= 1/2 * base * height
+      return
+
+#+end_src
+#+name:ans
+#+begin_src python
+  # Replace your_params with the appropriate parameters
+  def area(base,height):
+      # Returns area of the triangle using the formula area= 1/2 * base * height
+      return (1/2) * base * height
+
+#+end_src
+
+* Question 3: Area 2
+Another way of calculating the area of a triangle with sides A, B, C is using the trigonometric ratio sine to get area = 1/2 * A * B * sin(AB), where AB is the included angle between sides A and B. 
+
+The sin function is provided by the math package. You can call it by using sin after including the line from math import * at the top of your Python file. 
+
+For information on how to use the math package, refer to https://docs.python.org/3.10/library/math.html
+
+Define a function area2 that calculates and returns the area of any given triangle using this formula.
+
+Decide what arguments the function requires as input and what its return value should be.
+ 
+
+Both functions calculate the same result. Can they be directly substituted for each other? Why?
+
+
+Note: Python does not need "units" to do the calculation. 1.2, for example, in the test case, is a measurement in radians. 
+
+#+begin_src python
+  from math import *
+
+  def area2(your_params):
+      # Returns area of the triangle using 
+      # the formula area= 1/2 * A * B * sin(AB).
+      return
+
+  ###########
+  ##  Q2b  ##
+  ###########
+
+  # Both functions area2 and area calculate the same result. 
+  # Can they be directly substituted for each other? Why?
+
+  """
+  Write your answer within these triple quotes
+  Answer:
+
+  """
+
+#+end_src
+#+name:ans
+#+begin_src python
+  import math
+
+  def area2(a,b, ab):
+      # Returns area of the triangle using 
+      # the formula area= 1/2 * A * B * sin(AB).
+    
+      return (1/2) * a * b * math.sin(ab)
+
+  ###########
+  ##  Q2b  ##
+  ###########
+
+  # Both functions area2 and area calculate the same result. 
+  # Can they be directly substituted for each other? Why?
+
+  """
+  yes, as both their results can be used equivalently
+
+  """
+
+#+end_src
+
+* Question 4: Area 3
+We can also calculate the area of triangle with sides of length a, b and c using Heron’s Formula, 
+
+area = math.sqrt(s(s - a)(s - b)(s - c)) where s = (a+b+c)/2.
+
+Assume you are given a function herons_formula that takes 3 arguments a, b, c and returns the area of a triangle with sides of length a, b, c.
+
+Define a function area3 that uses Heron’s formula to calculate and return the area of a given triangle given the x,y coordinates of the 3 points of the triangle.
+
+You may use the magnitude function defined in Question 1. It has already been defined for you in this question.
+
+#+begin_src python
+  from math import *
+
+  def area3(x1, y1, x2, y2, x3, y3):
+      # Return area of the triangle using Heron’s formula.
+      return
+
+
+  # Don't need to modify the following function
+  def herons_formula(a, b, c):
+      s = (a + b + c) / 2
+      return sqrt(s * (s - a) * (s - b) * (s - c))
+
+
+#+end_src
+
+#+name:ans
+#+begin_src python
+  from math import sqrt
+
+  def area3(x1, y1, x2, y2, x3, y3):
+      # Return area of the triangle using Heron’s formula.
+      return herons_formula(mag(x1,y1,x2,y2),mag(x2,y2,x3,y3),mag(x3,y3,x1,y1))
+
+
+  # Don't need to modify the following function
+  def herons_formula(a, b, c):
+      s = (a + b + c) / 2
+      return sqrt(s * (s - a) * (s - b) * (s - c))
+
+
+  def mag(x1, y1, x2, y2):
+      # Returns the magnitude of the vector
+      # between (x1, y1) and (x2, y2).
+      return sqrt((x1-x2)**2 + (y1-y2)**2)
+
+
+#+end_src
+
+* Question 5: Expression Evaluation
+This is a code-tracing question. For each of the questions below, what is printed when the expressions are evaluated?
+
+#+begin_src python
+
+  def foo1():
+      i = 0
+      result = 0 
+      while i < 10:   
+         result += i      
+         i += 1   
+      return result
+  print(foo1())
+
+
+  def foo2():
+      i = 0
+      result = 0
+      while i < 10:
+          if i == 3:
+              break
+          result += i
+          i += 1
+      return result
+  print(foo2())
+
+
+  def bar1():
+      result = 0
+      for i in range(10):
+          result += i
+      return result
+  print(bar1())
+
+
+  def bar2():
+      result = 0
+      for i in range(10):
+          if i % 3 == 1:
+              continue
+          result += i
+      return result
+  print(bar2())
+#+end_src
+
+#+begin_src python
+  # Replace the value of each variable listed below with your answer
+
+  foo1_output = None
+  foo2_output = None
+  bar1_output = None
+  bar2_output = None
+
+#+end_src
+
+#+name:ans
+#+begin_src python
+  # Replace the value of each variable listed below with your answer
+  foo1_output = 0+1+2+3+4+5+6+7+8+9
+  foo2_output = 0+1+2
+  bar1_output = foo1_output
+  bar2_output = foo1_output - 1-4-7
+
+#+end_src
+
+* Question 6: Sum of even factorials
+Write a function sum_even_factorials that takes in a non-negative integer n, and finds the sum of the factorials of the non-negative even numbers that are less than or equal to n.
+
+#+begin_src python
+  def sum_even_factorials(n):
+      # Returns the sum of factorials of even numbers 
+      # that are less than or equal to n.
+      return
+
+#+end_src
+
+#+name:ans
+#+begin_src python
+  def sum_even_factorials(n):
+      # Returns the sum of factorials of even numbers 
+      # that are less than or equal to n.
+      def factorial(x):
+          if x<=1: return 1
+          return x * factorial(x-1)
+      return sum(map(factorial,filter(lambda x: not (x%2), range(n+1))))
+
+#+end_src
+
+* Question 7: Evaluating a Function
+Suppose we define the function:
+
+#+begin_src python
+  def f(g):
+      return g(2)
+#+end_src
+Then we have
+#+begin_src python
+  def square(x):
+      return x ** 2
+
+  >>> f(square)
+  4
+  >>> f(lambda z: z * (z + 1))
+  6
+#+end_src
+
+What happens if we (perversely) ask the interpreter to evaluate the combination f(f)? Explain.
+
+#+begin_src python
+  """
+  Write your answer within the triple quotes
+  Answer: 
+
+  """
+#+end_src
+#+name:ans
+#+begin_src python
+  """
+  it'll evaluate to f(2), which will evaluate to 2(2), which errors because 2 is a number literal, not a function. It tries to use a number literal as a function.
+  """
+#+end_src
+
+
