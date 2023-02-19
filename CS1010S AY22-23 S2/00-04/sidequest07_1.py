@@ -77,3 +77,12 @@ solve_8_new = solve_pow_2(3)
 t3 = create_table_pow_2(3)
 run(t3,solve_8_new)
 
+
+def get_2_pow(i):
+    if i == 1: return 0
+    return 1 + get_2_pow(i//2)
+
+def solve(table):
+    solve_pow_2(get_2_pow(get_table_size(table)))(table)
+    return
+

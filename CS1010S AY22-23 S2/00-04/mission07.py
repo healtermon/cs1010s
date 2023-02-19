@@ -57,7 +57,7 @@ def get_station_by_name(line, station_name):
 
 def get_station_by_code(line, station_code):
     station_result = filter(lambda station:station_code==get_station_code(station), get_line_stations(line))
-    print(station_result)
+    # print(station_result)
     return station_result[0] if station_result!=() else None
 
 def get_station_position(line, station_code):
@@ -216,14 +216,15 @@ BD_EVENTS = parse_events_in_line('breakdown_events.csv', CCL)
 #############
 # Task 3a   #
 #############
+def abs_dist(x,y): return abs(x-y)
 
 def is_valid_event_in_line(bd_event, line):
     def time_in_range(i,f,x): return not (x < i or x > f)
         
     train_p,t = get_train_position(bd_event),get_schedule_time(bd_event)
     fr,to = get_from_station(train_p),get_next_station(train_p)
-    return abs(get_station_position(line,get_station_code(fr)) - \
-               get_station_position(line,get_station_code(to))) == 1 \
+    return abs_dist(get_station_position(line,get_station_code(fr)),
+                    get_station_position(line,get_station_code(to))) == 1 \
            and time_in_range(datetime.time(7),datetime.time(23),t.time())
 
 def get_valid_events_in_line(bd_events, line):
@@ -235,8 +236,8 @@ VALID_BD_EVENTS = get_valid_events_in_line(BD_EVENTS, CCL)
 
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 3A
 # print("## Task 3a ##")
-print(is_valid_event_in_line(test_bd_event1, CCL))
-print(is_valid_event_in_line(test_bd_event2, CCL))
+# print(is_valid_event_in_line(test_bd_event1, CCL))
+# print(is_valid_event_in_line(test_bd_event2, CCL))
 
 # Expected Output #
 # True
@@ -247,11 +248,14 @@ print(is_valid_event_in_line(test_bd_event2, CCL))
 #############
 
 def get_location_id_in_line(bd_event, line):
-    
+    t_p = get_train_position(bd_event)
+    if not get_is_moving(t_p): return get_station_position(line, get_station_code(get_stopped_station(t_p)))
+    else: return 0.5 + min(get_station_position(line, get_station_code(get_previous_station(t_p))),
+                           get_station_position(line, get_station_code(get_next_station(t_p))))
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 3B
 # print("## Task 3b ##")
-# test_loc_id1 = get_location_id_in_line(test_bd_event1, CCL)
-# test_loc_id2 = get_location_id_in_line(test_bd_event2, CCL)
+test_loc_id1 = get_location_id_in_line(test_bd_event1, CCL)
+test_loc_id2 = get_location_id_in_line(test_bd_event2, CCL)
 # print(test_loc_id1)
 # print(test_loc_id2)
 
@@ -264,20 +268,19 @@ def get_location_id_in_line(bd_event, line):
 ############
 
 # UNCOMMENT the following to read the entire train schedule
-# FULL_SCHEDULE = parse_events_in_line('train_schedule.csv', CCL)    # this will take some time to run
+FULL_SCHEDULE = parse_events_in_line('train_schedule.csv', CCL)    # this will take some time to run
 
 #############
 # Task 4a   #
 #############
 
 def get_schedules_at_time(train_schedule, time):
-    '''your code here'''
-    return
-
+    return filter(lambda event: get_schedule_time(event) == time,
+                  train_schedule)
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 4A
 # print("## Task 4a ##")
-# test_datetime = datetime.datetime(2017, 1, 6, 6, 0)
-# test_schedules_at_time = get_schedules_at_time(FULL_SCHEDULE[:5], test_datetime)
+test_datetime = datetime.datetime(2017, 1, 6, 6, 0)
+test_schedules_at_time = get_schedules_at_time(FULL_SCHEDULE[:5], test_datetime)
 # print(test_schedules_at_time[1])
 
 # Expected Output #
@@ -286,14 +289,13 @@ def get_schedules_at_time(train_schedule, time):
 #############
 # Task 4b   #
 #############
-
+# copy code of abs_dist here
 def get_schedules_near_loc_id_in_line(train_schedule, line, loc_id):
-    '''your code here'''
-    return
-
+    return filter(lambda event: abs_dist(get_location_id_in_line(event,line), loc_id) <= 0.5, 
+                  train_schedule)
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 4B
 # print("## Task 4b ##")
-# test_schedules_near_loc_id = get_schedules_near_loc_id_in_line(FULL_SCHEDULE[:10], CCL, test_loc_id1)
+test_schedules_near_loc_id = get_schedules_near_loc_id_in_line(FULL_SCHEDULE[:10], CCL, test_loc_id1)
 # print(test_schedules_near_loc_id[1])
 
 # Expected Output #
@@ -304,15 +306,13 @@ def get_schedules_near_loc_id_in_line(train_schedule, line, loc_id):
 #############
 
 def get_rogue_schedules_in_line(train_schedule, line, time, loc_id):
-    '''your code here'''
-    return
-
+    return get_schedules_near_loc_id_in_line(get_schedules_at_time(train_schedule,time), line,loc_id)
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 4C
 # print("## Task 4c ##")
-# test_bd_event3 = VALID_BD_EVENTS[0]
-# test_loc_id3 = get_location_id_in_line(test_bd_event3, CCL)
-# test_datetime3 = get_schedule_time(test_bd_event3)
-# test_rogue_schedules = get_rogue_schedules_in_line(FULL_SCHEDULE[1000:1100], CCL, test_datetime3, test_loc_id3)
+test_bd_event3 = VALID_BD_EVENTS[0]
+test_loc_id3 = get_location_id_in_line(test_bd_event3, CCL)
+test_datetime3 = get_schedule_time(test_bd_event3)
+test_rogue_schedules = get_rogue_schedules_in_line(FULL_SCHEDULE[1000:1100], CCL, test_datetime3, test_loc_id3)
 # print(test_rogue_schedules[2])
 
 # Expected Output #
@@ -344,16 +344,22 @@ SCORER = make_scorer()
 #############
 
 def calculate_blame_in_line(full_schedule, valid_bd_events, line, scorer):
-    '''your code here'''
-    pass
-
+    for bd_event in valid_bd_events:
+        blamed_trains = []
+        rogue_scheds = get_rogue_schedules_in_line(full_schedule,line,get_schedule_time(bd_event), get_location_id_in_line(bd_event,line))
+        for rogue_sched in rogue_scheds:
+            train_in_question = get_train_code(get_train(rogue_sched))
+            if train_in_question not in blamed_trains:
+                blame_train(scorer,train_in_question)
+                blamed_trains += [train_in_question]
+    return scorer
+                                
 # UNCOMMENT THE CODE BELOW WHEN YOU ARE DONE WITH TASK 5A. THIS IS NOT OPTIONAL TESTING!
-# calculate_blame_in_line(FULL_SCHEDULE, VALID_BD_EVENTS, CCL, SCORER)
+calculate_blame_in_line(FULL_SCHEDULE, VALID_BD_EVENTS, CCL, SCORER)
 
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 5A
 # print("## Task 5a ##")
 # print(sorted(get_blame_scores(SCORER))[7])
-
 # Expected Answer
 # ('TRAIN 0-5', 2)
 
@@ -361,9 +367,7 @@ def calculate_blame_in_line(full_schedule, valid_bd_events, line, scorer):
 # Task 5b   #
 #############
 
-def find_max_score(scorer):
-    '''your code here'''
-    return
+def find_max_score(scorer): return max(score for _,score in get_blame_scores(scorer))
 
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 5B
 # print("## Task 5b ##")
@@ -379,21 +383,28 @@ def find_max_score(scorer):
 
 # UNCOMMENT THE CODE BELOW TO VIEW ALL BLAME SCORES. THIS IS NOT OPTIONAL TESTING!
 # print("## Task 5c ##")
-# train_scores = get_blame_scores(SCORER)
-# print("############### Candidate rogue trains ###############")
-# for score in train_scores:
-#     print("%s: %d" % (score[0], score[1]))
-# print("######################################################")
+train_scores = get_blame_scores(SCORER)
+print("############### Candidate rogue trains ###############")
+for score in train_scores:
+    print("%s: %d" % (score[0], score[1]))
+print("######################################################")
 
 ''' Please type your answer into the Task 5c textbox on Coursemology '''
+# "TRAIN 0-4" has been close to breakdown events 180 times, 10x as much as the
+# 2nd candidate, "TRAIN 1-1" at 18 times. This is statistically significant, as
+# it is an order of magnitude more.  Adding up all the scores excluding the one
+# in question, it is sum(score[1] for score in get_blame_scores(SCORER)[1:]) ==
+# 190, which is almost 180. If at least 1 train could be nearby when this train
+# broke down, which makes sense as some lines can get really busy during peak
+# hours, this makes the train even more suspicious. Hence even though it could
+# be a bug, it is probably worthwhile to check this particular train, and the
+# hypothesis that the events are caused by a single train is very likely.
 
 #############
 # Task 5d   #
 #############
 
-def find_rogue_train(scorer, max_score):
-    '''your code here'''
-    return
+def find_rogue_train(scorer, max_score): return next(code for code,score in get_blame_scores(scorer) if score == max_score)
 
 # UNCOMMENT THE CODE BELOW TO TEST YOUR TASK 5D
 # print("## Task 5d ##")
