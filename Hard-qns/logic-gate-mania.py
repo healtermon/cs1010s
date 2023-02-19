@@ -1,7 +1,9 @@
+# TODOL: test after I made "val is True" instead of "val == True": https://stackoverflow.com/questions/27276610/boolean-identity-true-vs-is-true
+
 class logicalOperators:
     @staticmethod
     def ensure_logical(val):
-        if not (val == True or val == False): raise Exception("oi wat type did u pass to logic operator? pls input logcal values True or False only!")
+        if not isinstance(val,bool): raise Exception("oi wat type did u pass to logic operator? pls input logcal values True or False only!")
         else: return val
     @classmethod
     def logical_not(cls,x): return not cls.ensure_logical(x)
