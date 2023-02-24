@@ -11,7 +11,6 @@ solve_trivial_4 = solve_trivial
 t2_2 = create_table(4)
 run(t2_2, solve_trivial_4)
 
-
 t2_3 = create_table(2)
 def solve_2(t):
     if check_solved(t): return
