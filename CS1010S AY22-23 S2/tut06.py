@@ -102,76 +102,133 @@ def bubblesort_ascending_inplace(l:list,key=lambda x:x):
 # I ALWAYS FORGET TO RETURN THE LIST ITSELF AFTER WRITING THE SEARCH, ARGHHHH
 
 # the only sort that was correct on first try
-def mergesort_ascending_new_list(l:list,key=lambda x:x):
+def mergesort_ascending_new_list(l:list,key=lambda x:x,ascend=True):
     n = len(l)
     if n<=1: return l
     avgi = n//2
-    l1 = mergesort_ascending_new_list(l[:avgi])
-    l2 = mergesort_ascending_new_list(l[avgi:])
+    l1 = mergesort_ascending_new_list(l[:avgi],key,ascend)
+    l2 = mergesort_ascending_new_list(l[avgi:],key,ascend)
     new_l = []
 
     while(l1 and l2):
-        new_l.append(l1.pop(0) if key(l1[0]) < key(l2[0]) else l2.pop(0))
+        # print("l1 ",l1,"l2",l2,"comparison", key(l1[0]) > key(l2[0]))
+
+        if ascend:
+            new_l.append(l1.pop(0) if key(l1[0]) < key(l2[0]) else l2.pop(0))
+        else:
+            # print("is this trigere")
+            new_l.append(l1.pop(0) if key(l1[0]) > key(l2[0]) else l2.pop(0))
+    # print("new_l",new_l)
     new_l.extend(l1)
     new_l.extend(l2)
+    # print("returning",new_l)
     return new_l
         
 
-# Insertion Sort
-[5, 7, 4, 9, 8, 5, 6, 3]
-[3, 5, 7, 4, 9, 8, 5, 6]
-[3, 4, 5, 7, 9, 8, 5, 6]
-[3, 4, 5, 7, 8, 9, 5, 6]
-[3, 4, 5, 5, 7, 8, 9, 6]
-[3, 4, 5, 5, 6, 7, 8, 9]
+# # Insertion Sort
+# [5, 7, 4, 9, 8, 5, 6, 3]
+# [3, 5, 7, 4, 9, 8, 5, 6]
+# [3, 4, 5, 7, 9, 8, 5, 6]
+# [3, 4, 5, 7, 8, 9, 5, 6]
+# [3, 4, 5, 5, 7, 8, 9, 6]
+# [3, 4, 5, 5, 6, 7, 8, 9]
 
-# Selection  Sort
-[5, 7, 4, 9, 8, 5, 6, 3]
-[3, 7, 4, 9, 8, 5, 6, 5]
-[3, 4, 5, 9, 8, 7, 6, 5]
-[3, 4, 5, 5, 8, 7, 6, 9]
-[3, 4, 5, 5, 6, 7, 8, 9]
+# # Selection  Sort
+# [5, 7, 4, 9, 8, 5, 6, 3]
+# [3, 7, 4, 9, 8, 5, 6, 5]
+# [3, 4, 5, 9, 8, 7, 6, 5]
+# [3, 4, 5, 5, 8, 7, 6, 9]
+# [3, 4, 5, 5, 6, 7, 8, 9]
 
 
-# Bubble Sort, my favourite 'cuz it's the simplest
-[5, 7, 4, 9, 8, 5, 6, 3]
-[5, 7, 4, 9, 8, 5, 3, 6]
-[5, 7, 4, 9, 8, 3, 5, 6]
-[5, 7, 4, 9, 3, 8, 5, 6]
-[5, 7, 4, 3, 9, 8, 5, 6]
-[5, 7, 3, 4, 9, 8, 5, 6]
-[5, 3, 7, 4, 9, 8, 5, 6]
-[3, 5, 7, 4, 9, 8, 5, 6]
-[3, 5, 7, 4, 9, 5, 8, 6]
-[3, 5, 7, 4, 5, 9, 8, 6]
-[3, 5, 4, 7, 5, 9, 8, 6]
-[3, 4, 5, 7, 5, 9, 8, 6]
-[3, 4, 5, 7, 5, 9, 6, 8]
-[3, 4, 5, 7, 5, 6, 9, 8]
-[3, 4, 5, 5, 7, 6, 9, 8]
-[3, 4, 5, 5, 7, 6, 8, 9]
-[3, 4, 5, 5, 6, 7, 8, 9]
+# # Bubble Sort, my favourite 'cuz it's the simplest
+# [5, 7, 4, 9, 8, 5, 6, 3]
+# [5, 7, 4, 9, 8, 5, 3, 6]
+# [5, 7, 4, 9, 8, 3, 5, 6]
+# [5, 7, 4, 9, 3, 8, 5, 6]
+# [5, 7, 4, 3, 9, 8, 5, 6]
+# [5, 7, 3, 4, 9, 8, 5, 6]
+# [5, 3, 7, 4, 9, 8, 5, 6]
+# [3, 5, 7, 4, 9, 8, 5, 6]
+# [3, 5, 7, 4, 9, 5, 8, 6]
+# [3, 5, 7, 4, 5, 9, 8, 6]
+# [3, 5, 4, 7, 5, 9, 8, 6]
+# [3, 4, 5, 7, 5, 9, 8, 6]
+# [3, 4, 5, 7, 5, 9, 6, 8]
+# [3, 4, 5, 7, 5, 6, 9, 8]
+# [3, 4, 5, 5, 7, 6, 9, 8]
+# [3, 4, 5, 5, 7, 6, 8, 9]
+# [3, 4, 5, 5, 6, 7, 8, 9]
 
-# Quick Sort
-[5, 7, 4, 9, 8, 5, 6, 3]
-[5, 7, 4, 9,]   [ 8, 5, 6, 3]
-[5, 7][ 4, 9]   [ 8, 5][ 6, 3]
-()[5][ 7]   ()[4][ 9]   ()[ 8][ 5]   ()[ 6][ 3]
-(5)[][ 7]   (4)[][ 9]   (5)[ 8][]   (3)[ 6][]
-(5,7)[][]   (4,9)[][]   (5,8)[][]   (3,6)[][]
-(5,7)[][]   (4,9)[][]   (5,8)[][]   (3,6)[][]
-()[5, 7][4, 9]      ()[5,8][3,6]
-(4)[5, 7][9]      (3)[5,8][6]
-(4,5)[7][9]      (3,5)[8][6]
-(4,5,7)[][9]      (3,5,6)[8][]
-(4,5,7,9)[][]      (3,5,6,8)[][]
-()[4,5,7,9][3,5,6,8]
-(3)[4,5,7,9][5,6,8]
-(3,4)[5,7,9][5,6,8]
-(3,4,5)[7,9][5,6,8]
-(3,4,5,5)[7,9][6,8]
-(3,4,5,6)[7,9][8]
-(3,4,5,6,7)[9][8]
-(3,4,5,6,7,8)[9][]
-(3,4,5,6,7,8,9)[][]
-[3,4,5,6,7,8,9]
+# # Quick Sort
+# [5, 7, 4, 9, 8, 5, 6, 3]
+# [5, 7, 4, 9,]   [ 8, 5, 6, 3]
+# [5, 7][ 4, 9]   [ 8, 5][ 6, 3]
+# ()[5][ 7]   ()[4][ 9]   ()[ 8][ 5]   ()[ 6][ 3]
+# (5)[][ 7]   (4)[][ 9]   (5)[ 8][]   (3)[ 6][]
+# (5,7)[][]   (4,9)[][]   (5,8)[][]   (3,6)[][]
+# (5,7)[][]   (4,9)[][]   (5,8)[][]   (3,6)[][]
+# ()[5, 7][4, 9]      ()[5,8][3,6]
+# (4)[5, 7][9]      (3)[5,8][6]
+# (4,5)[7][9]      (3,5)[8][6]
+# (4,5,7)[][9]      (3,5,6)[8][]
+# (4,5,7,9)[][]      (3,5,6,8)[][]
+# ()[4,5,7,9][3,5,6,8]
+# (3)[4,5,7,9][5,6,8]
+# (3,4)[5,7,9][5,6,8]
+# (3,4,5)[7,9][5,6,8]
+# (3,4,5,5)[7,9][6,8]
+# (3,4,5,6)[7,9][8]
+# (3,4,5,6,7)[9][8]
+# (3,4,5,6,7,8)[9][]
+# (3,4,5,6,7,8,9)[][]
+# [3,4,5,6,7,8,9]
+
+students = [('tiffany', 'A', 15), 
+            ('jane', 'B', 10),
+            ('ben', 'C', 8), 
+            ('eugene', 'A', 21),
+            ('simon', 'A', 21), 
+            ('john', 'A', 15), 
+            ('jimmy', 'F', 1), 
+            ('charles', 'C', 9), 
+            ('freddy', 'D', 4), 
+            ('dave', 'B', 12)]
+
+def top_k(students, k):
+    l = [[]]
+    score = lambda x: x[2]
+    students_by_descending_score = mergesort_ascending_new_list(students, key=score, ascend=False)
+    # pp(students_by_descending_score)
+    curr_score = score(students_by_descending_score[0])
+    count = 0
+    while(students_by_descending_score):
+        sc = score(students_by_descending_score[0])
+        if  sc != curr_score:
+            print("sc",sc,"curr_score",curr_score)
+            if count>=k: break
+            l.append([])
+            curr_score = sc
+        l[-1].append(students_by_descending_score.pop(0))
+        count += 1
+    # pp(l)
+    return sum([mergesort_ascending_new_list(score_group,key=lambda x:x[0]) for score_group in l],[])
+
+        
+
+def mode_score(students):
+    l = [[]]
+    scores = sorted(s[2] for s in students)
+    print(scores)
+    curr_score = scores[0]
+    while(scores):
+        if  scores[0] != curr_score:
+            l.append([])
+            curr_score = scores[0]
+        l[-1].append(scores.pop(0))
+    print(l)
+
+    modes =  [(i[0],len(i)) for i in l]
+    print("modes",modes)
+    name,freq = max(modes,key=lambda x:x[1])
+    return [i[0] for i in filter(lambda x:x[1]==freq, modes)]
